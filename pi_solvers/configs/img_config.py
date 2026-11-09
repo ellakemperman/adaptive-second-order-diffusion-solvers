@@ -31,6 +31,7 @@ def get_config():
             nfe: int,
             ode_threshold: float = 0.05,
             sampler_schedule_path: str | None = None,
+            raw_path: bool = False,
             **sampler_kwargs
     ):
         spec = config_dict.ConfigDict()
@@ -39,6 +40,7 @@ def get_config():
         spec.nfe = nfe
         spec.sampler_schedule_path = sampler_schedule_path
         spec.sampler_kwargs = sampler_kwargs
+        spec.raw_path = raw_path
         spec.out_path = f"{cfg.base_out}/{sampler_name}_{sampler_schedule_name}/{nfe}NFE/"
         spec.spec_path = f"{sampler_name}_{sampler_schedule_name}/{nfe}NFE/"
         spec.ode_threshold = ode_threshold
@@ -86,9 +88,9 @@ def get_config():
 
     ret_path = "refs/ret.pt"
 
-    add_spec("euler-maruyama", "entropic", 49, sampler_schedule_path=ret_path)
-    add_spec("euler-maruyama", "entropic", 75, sampler_schedule_path=ret_path)
-    add_spec("euler-maruyama", "entropic", 99, sampler_schedule_path=ret_path)
+    add_spec("euler-maruyama", "entropic", 49, sampler_schedule_path=ret_path, raw_path=True)
+    add_spec("euler-maruyama", "entropic", 75, sampler_schedule_path=ret_path, raw_path=True)
+    add_spec("euler-maruyama", "entropic", 99, sampler_schedule_path=ret_path, raw_path=True)
 
     # Stochastic Heun
     add_spec("heun", "edm", 49)
@@ -99,9 +101,9 @@ def get_config():
     add_spec("heun", "pi", 75, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/75NFE/data/_t.csv")
     add_spec("heun", "pi", 99, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/99NFE/data/_t.csv")
 
-    add_spec("heun", "entropic", 49, sampler_schedule_path=ret_path)
-    add_spec("heun", "entropic", 75, sampler_schedule_path=ret_path)
-    add_spec("heun", "entropic", 99, sampler_schedule_path=ret_path)
+    add_spec("heun", "entropic", 49, sampler_schedule_path=ret_path, raw_path=True)
+    add_spec("heun", "entropic", 75, sampler_schedule_path=ret_path, raw_path=True)
+    add_spec("heun", "entropic", 99, sampler_schedule_path=ret_path, raw_path=True)
 
     # EDM
     edm_churn_params = {
@@ -119,8 +121,8 @@ def get_config():
     add_spec("edm", "pi", 75, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/75NFE/data/_t.csv", **edm_churn_params)
     add_spec("edm", "pi", 99, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/99NFE/data/_t.csv", **edm_churn_params)
 
-    add_spec("edm", "entropic", 49, **edm_churn_params, sampler_schedule_path=ret_path)
-    add_spec("edm", "entropic", 75, **edm_churn_params, sampler_schedule_path=ret_path)
-    add_spec("edm", "entropic", 99, **edm_churn_params, sampler_schedule_path=ret_path)
+    add_spec("edm", "entropic", 49, **edm_churn_params, sampler_schedule_path=ret_path, raw_path=True)
+    add_spec("edm", "entropic", 75, **edm_churn_params, sampler_schedule_path=ret_path, raw_path=True)
+    add_spec("edm", "entropic", 99, **edm_churn_params, sampler_schedule_path=ret_path, raw_path=True)
 
     return cfg
