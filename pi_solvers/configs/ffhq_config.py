@@ -38,9 +38,12 @@ def get_config():
         spec.sampler_name = sampler_name
         spec.sampler_schedule_name = sampler_schedule_name
         spec.nfe = nfe
-        spec.sampler_schedule_path = sampler_schedule_path
-        spec.sampler_kwargs = sampler_kwargs
         spec.raw_path = raw_path
+        if raw_path:
+            spec.sampler_schedule_path = sampler_schedule_path
+        else:
+            spec.sampler_schedule_path = f"{cfg.base_out}/{sampler_schedule_path}"
+        spec.sampler_kwargs = sampler_kwargs
         spec.out_path = f"{cfg.base_out}/{sampler_name}_{sampler_schedule_name}/{nfe}NFE/"
         spec.spec_path = f"{sampler_name}_{sampler_schedule_name}/{nfe}NFE/"
         spec.ode_threshold = ode_threshold
