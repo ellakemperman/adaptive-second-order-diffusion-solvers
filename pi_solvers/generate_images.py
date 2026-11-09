@@ -47,7 +47,7 @@ def generate_pi_images(
     )
 
     solver_constructor = lambda sde, _: construct_heun_end_adaptive_solver(adaptive_solver_class=PISolver, sde=sde, seed=seed, **pi_kwargs)
-    nfe = generate_images(
+    nfe, total_time = generate_images(
         solver_func=solver_constructor,
         ode_threshold=0,
         outdir=image_path,
@@ -62,6 +62,8 @@ def generate_pi_images(
 
     with open(write_path + "info.txt", 'a') as f:
         f.write(f"nfe: {nfe}")
+
+    return total_time
 
 
 def generate_ggf_images(
@@ -91,7 +93,7 @@ def generate_ggf_images(
     )
 
     solver_constructor = lambda sde, _: construct_heun_end_adaptive_solver(adaptive_solver_class=GottaGoFast, sde=sde, seed=seed, **ggf_kwargs)
-    nfe = generate_images(
+    nfe, total_time = generate_images(
         solver_func=solver_constructor,
         outdir=image_path,
         ode_threshold=0,
@@ -106,6 +108,8 @@ def generate_ggf_images(
 
     with open(write_path + "info.txt", 'a') as f:
         f.write(f"nfe: {nfe}")
+
+    return total_time
 
 
 def generate_em_images(
@@ -163,7 +167,7 @@ def generate_em_images(
         solver_constructor = lambda sde, _: HeunSolver(sde=sde, discretisation=discretisation, seed=seed)
     else:
         solver_constructor = lambda sde, _: EulerMarayumaSolver(sde=sde, discretisation=discretisation, seed=seed)
-    generate_images(
+    _, total_time = generate_images(
         solver_func=solver_constructor,
         outdir=image_path,
         n_samples=n_images,
@@ -174,6 +178,7 @@ def generate_em_images(
         device=device,
         ode_threshold=ode_threshold
     )
+    return total_time
 
 
 def generate_edm_images(
@@ -223,7 +228,7 @@ def generate_edm_images(
         raise ValueError("Only one of pi_discretisation and entropy_checkpoint should be set.")
 
     solver_constructor = lambda sde, model: EDMSolver(sde=sde, model=model, discretisation=discretisation, seed=seed, **edm_kwargs)
-    generate_images(
+    _, total_time = generate_images(
         solver_func=solver_constructor,
         outdir=image_path,
         n_samples=n_images,
@@ -233,7 +238,7 @@ def generate_edm_images(
         model_url=model,
         device=device
     )
-
+    return total_time
 
 def main():
     # Main argument parsing

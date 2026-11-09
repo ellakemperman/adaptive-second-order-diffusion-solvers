@@ -53,7 +53,7 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
     device = cfg.device if device is None else device
 
     print(f"Generating {cfg.n_samples} images for the {sampler_name} solver with {sampler_schedule_name} schedule at {spec.nfe} NFE...")
-    func(
+    total_time = func(
         batch_size=cfg.sampling_batch_size,
         device=device,
         n_images=cfg.n_samples,
@@ -66,6 +66,8 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
         nfe=spec.nfe,
         **spec.sampler_kwargs
     )
+
+    sample_weighed_time = total_time / spec.n_samples
 
     # Evaluating images
     metrics = eval_features(
@@ -85,6 +87,8 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
         for metric in metrics:
             f.write(metric + ", ")
             f.write("\n")
+        f.write(f"Total sampling time: {total_time} seconds\n")
+        f.write(f"Per-sample time: {sample_weighed_time} seconds\n")
 
 
 

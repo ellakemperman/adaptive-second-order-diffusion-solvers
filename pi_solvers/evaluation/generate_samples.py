@@ -1,5 +1,6 @@
 import os
 from typing import Callable
+import time
 
 import torch
 import PIL.Image
@@ -37,6 +38,7 @@ def generate_images(
 
     print("Sampling images...")
     # Sampling loop
+    start_time = time.time()
     for i in tqdm.tqdm(range(0, n_samples, batch_size)):
 
         # Bound batch size if new batch would exceed total amount of samples
@@ -73,5 +75,6 @@ def generate_images(
         if i == 0:
             print(f"First iteration NFE: {nfe / batch_size}")
         sde.reset()
-
-    return nfe / n_samples
+    end_time = time.time()
+    total_time = end_time - start_time
+    return nfe / n_samples, total_time
