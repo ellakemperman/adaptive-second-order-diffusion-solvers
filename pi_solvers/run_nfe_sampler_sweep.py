@@ -67,7 +67,7 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
         **spec.sampler_kwargs
     )
 
-    sample_weighed_time = total_time / spec.n_samples
+    sample_weighed_time = total_time / cfg.n_samples
 
     # Evaluating images
     metrics = eval_features(
