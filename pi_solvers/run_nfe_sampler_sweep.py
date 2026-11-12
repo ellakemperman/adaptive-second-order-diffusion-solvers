@@ -39,7 +39,7 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
             sampler_schedule_path = spec.sampler_schedule_path
     else:
         out_path = spec.out_path
-        sampler_schedule_path = spec.sampler_schedule_path
+        sampler_schedule_path = spec.out_path + spec.sampler_schedule_path
 
     if sampler_schedule_name.lower() in ["pi", "pi-static", "propotional-integral", "pi-lm1b"]:
         func = lambda **kwargs: sampler_func(pi_discretisation=sampler_schedule_path, **kwargs)
