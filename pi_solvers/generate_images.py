@@ -159,7 +159,10 @@ def generate_em_images(
         n_steps = int((nfe * 0.8))
         n_ode_steps = nfe - n_steps
         print(n_steps + n_ode_steps)
-        discretisation = get_pi_schedule(n_steps, n_ode_steps, pi_discretisation)
+        if ode_threshold == 0:
+            discretisation = get_pi_schedule(nfe, 0, pi_discretisation, t_ode=0.002)
+        else:
+            discretisation = get_pi_schedule(n_steps, n_ode_steps, pi_discretisation)
     else:
         raise ValueError("Only one of pi_discretisation and entropy_checkpoint should be set.")
 
@@ -223,7 +226,10 @@ def generate_edm_images(
         n_steps = int((nfe * 0.8) // 2)
         n_ode_steps = nfe // 2 - n_steps
         print(n_steps + n_ode_steps)
-        discretisation = get_pi_schedule(n_steps, n_ode_steps, pi_discretisation)
+        if edm_kwargs["ode_threshold"] == 0:
+            discretisation = get_pi_schedule(nfe, 0, pi_discretisation, t_ode=0.002)
+        else:
+            discretisation = get_pi_schedule(n_steps, n_ode_steps, pi_discretisation)
     else:
         raise ValueError("Only one of pi_discretisation and entropy_checkpoint should be set.")
 
