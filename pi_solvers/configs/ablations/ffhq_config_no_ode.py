@@ -44,6 +44,7 @@ def get_config():
         else:
             spec.sampler_schedule_path = f"{cfg.base_out}/{sampler_schedule_path}"
         spec.sampler_kwargs = sampler_kwargs
+        print(sampler_kwargs)
         spec.out_path = f"{cfg.base_out}/{sampler_name}_{sampler_schedule_name}/{nfe}NFE/"
         spec.spec_path = f"{sampler_name}_{sampler_schedule_name}/{nfe}NFE/"
         spec.ode_threshold = ode_threshold
@@ -102,9 +103,9 @@ def get_config():
     add_spec("heun", "edm", 75)
     add_spec("heun", "edm", 99)
 
-    add_spec("heun", "pi", 49, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/49NFE/data/_t.csv")
-    add_spec("heun", "pi", 75, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/75NFE/data/_t.csv")
-    add_spec("heun", "pi", 99, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/99NFE/data/_t.csv")
+    add_spec("heun", "pi", 49, sampler_schedule_path=f"pi_adaptive/49NFE/data/_t.csv")
+    add_spec("heun", "pi", 75, sampler_schedule_path=f"pi_adaptive/75NFE/data/_t.csv")
+    add_spec("heun", "pi", 99, sampler_schedule_path=f"pi_adaptive/99NFE/data/_t.csv")
 
     add_spec("heun", "entropic", 49, sampler_schedule_path=ret_path)
     add_spec("heun", "entropic", 75, sampler_schedule_path=ret_path)
@@ -122,9 +123,9 @@ def get_config():
     add_spec("edm", "edm", 75, **edm_churn_params)
     add_spec("edm", "edm", 99, **edm_churn_params)
 
-    add_spec("edm", "pi", 49, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/49NFE/data/_t.csv", **edm_churn_params)
-    add_spec("edm", "pi", 75, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/75NFE/data/_t.csv", **edm_churn_params)
-    add_spec("edm", "pi", 99, sampler_schedule_path=f"{cfg.base_out}/pi_adaptive/99NFE/data/_t.csv", **edm_churn_params)
+    add_spec("edm", "pi", 49, sampler_schedule_path=f"pi_adaptive/49NFE/data/_t.csv", **edm_churn_params)
+    add_spec("edm", "pi", 75, sampler_schedule_path=f"pi_adaptive/75NFE/data/_t.csv", **edm_churn_params)
+    add_spec("edm", "pi", 99, sampler_schedule_path=f"pi_adaptive/99NFE/data/_t.csv", **edm_churn_params)
 
     add_spec("edm", "entropic", 49, **edm_churn_params, sampler_schedule_path=ret_path)
     add_spec("edm", "entropic", 75, **edm_churn_params, sampler_schedule_path=ret_path)
