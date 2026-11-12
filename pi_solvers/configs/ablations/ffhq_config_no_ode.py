@@ -60,16 +60,17 @@ def get_config():
         "h_start": h_0,
         "max_decrease": 0.2,
         "max_increase": 5,
-        "max_iter": 1000
+        "max_iter": 1000,
+        "interval": (80, 0)
     }
 
-    add_spec("pi", "adaptive", 49, **pi_params(1.15, 40, 5))
-    add_spec("pi", "adaptive", 75, **pi_params(0.92, 35, 7))
-    add_spec("pi", "adaptive", 99, **pi_params(0.72, 35, 10))
+    add_spec("pi", "adaptive", 49, **pi_params(1.15, 40, 0))
+    add_spec("pi", "adaptive", 75, **pi_params(0.97, 35, 0))
+    add_spec("pi", "adaptive", 99, **pi_params(0.75, 35, 0))
 
     # GGF specs
     ggf_params = lambda tau_rel, h_0, n: {
-        "ode_threshold": 0.05,
+        "ode_threshold": 0.0,
         "n_ode_steps": n,
         "tau_a": 0.0078,
         "tau_r": tau_rel,
@@ -78,11 +79,12 @@ def get_config():
         "max_decrease": 0.2,
         "max_increase": 5,
         "r": 0.1,
-        "max_iter": 1000
+        "max_iter": 1000,
+        "interval": (80, 0)
     }
-    add_spec("ggf", "adaptive", 49, **ggf_params(25.4, 25, 5))
-    add_spec("ggf", "adaptive", 75, **ggf_params(17.15, 25, 7))
-    add_spec("ggf", "adaptive", 99, **ggf_params(13.7, 20, 10))
+    add_spec("ggf", "adaptive", 49, **ggf_params(22.5, 25, 0))
+    add_spec("ggf", "adaptive", 75, **ggf_params(15.9, 25, 0))
+    add_spec("ggf", "adaptive", 99, **ggf_params(12.75, 20, 0))
 
     # EM
     ret_path = "refs/ret.pt"
