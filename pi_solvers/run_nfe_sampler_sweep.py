@@ -49,6 +49,10 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
         func = sampler_func
 
     # Generate images
+    n_samples = cfg.n_samples
+    if getattr(spec, "n_samples", None) is not None:
+        n_samples = spec.n_samples
+
     seed = cfg.seed if seed is None else seed
     device = cfg.device if device is None else device
 
@@ -56,7 +60,7 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
     total_time = func(
         batch_size=cfg.sampling_batch_size,
         device=device,
-        n_images=cfg.n_samples,
+        n_images=n_samples,
         model=cfg.model,
         seed=seed,
         output=out_path,
@@ -67,7 +71,7 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
         **spec.sampler_kwargs
     )
 
-    sample_weighed_time = total_time / cfg.n_samples
+    sample_weighed_time = total_time / n_samples
 
     # Evaluating images
     metrics = eval_features(
@@ -77,7 +81,7 @@ def resolve_spec(cfg: config_dict, spec: config_dict, seed: int = None, out_dir:
         output=out_path + "data",
         ref_statistics=cfg.stats_path,
         device=device,
-        n_images=cfg.n_samples,
+        n_images=n_samples,
         batch_size=cfg.eval_batch_size
     )
 
