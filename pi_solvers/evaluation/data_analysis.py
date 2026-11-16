@@ -15,12 +15,14 @@ from pi_solvers.utils import compute_discretisation_interpolation, compute_discr
 plt.style.use("science")
 
 
-def detect_outliers(paths: np.ndarray, t_min: float = 0.05, n_outlier_steps: int = 15):
+def detect_outliers(paths: np.ndarray, t_min: float = 0.05, n_outlier_steps: int = 15, n_ode_steps: int = 5):
     lengths = []
 
     for i, path in enumerate(paths):
         end_index = np.where(path <= t_min)[0][0]
         path = path[:(end_index + 1)]
+        if i == 1:
+            print(path)
 
         if end_index <= 2:
             continue
@@ -28,12 +30,12 @@ def detect_outliers(paths: np.ndarray, t_min: float = 0.05, n_outlier_steps: int
         if path.shape[0] < n_outlier_steps:
             print(f"Outlier at {i} with lengths {path.shape[0]}")
 
-        lengths.append(path.shape[0])
+        lengths.append((path.shape[0] - 3 + n_ode_steps) * 2 - 1)
 
     plt.figure(figsize=(5, 3.75))
     plt.hist(lengths)
     plt.ylabel("Count")
-    plt.xlabel("Number of steps taken")
+    plt.xlabel("NFE")
     plt.show()
 
 
@@ -116,10 +118,12 @@ def analyse_pi_gaussian_trajectories(ax, label: str, data_path: str, t_max: floa
 
 
 if __name__ == "__main__":
-    data_path = "../../data/gaussian_test/complex_high_h_start_high_tau/"
+    data_path = "../../data/cluster_data/ts/ffhq49"
     t_min = 0.002
     t_max = 80
 
+    detect_outliers(pd.read_csv(data_path).to_numpy(), t_min)
+"""
     fig = plt.figure(dpi=300)
     font = {'size': 12, 'weight': "bold"}
 
@@ -160,3 +164,4 @@ if __name__ == "__main__":
     generate_pi_image_trajectories(ax, data_path="../../data/text_data/rerun_evaluation_solver_schedule_nfe_sweep0/pi_files/128", label="PI LM1B", t_ode=t_min, t_min=t_min, t_max=t_max, n_paths=0, color="b")
 
     plt.savefig("real_trajectories.png")
+"""

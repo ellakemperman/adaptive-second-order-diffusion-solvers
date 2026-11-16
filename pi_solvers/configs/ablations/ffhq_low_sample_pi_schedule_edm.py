@@ -62,7 +62,9 @@ def get_config():
         "max_increase": 5,
         "max_iter": 1000
     }
-    add_spec("pi", "adaptive", 99, **pi_params(1.15, 40, 5), n_samples=500)
+    add_spec("pi", "adaptive", 49, **pi_params(1.15, 40, 5), n=500)
+    add_spec("pi", "adaptive", 75, **pi_params(0.92, 35, 7), n=500)
+    add_spec("pi", "adaptive", 99, **pi_params(0.72, 35, 10), n=500)
 
     # EDM
     edm_churn_params = {
@@ -72,8 +74,8 @@ def get_config():
         "S_noise": 1.003
     }
 
-    add_spec("edm", "pi", 49, sampler_schedule_path=f"pi_adaptive/99NFE/data/_t.csv", **edm_churn_params, raw_path=False)
-    add_spec("edm", "pi", 75, sampler_schedule_path=f"pi_adaptive/99NFE/data/_t.csv", **edm_churn_params, raw_path=False)
+    add_spec("edm", "pi", 49, sampler_schedule_path=f"pi_adaptive/49NFE/data/_t.csv", **edm_churn_params, raw_path=False)
+    add_spec("edm", "pi", 75, sampler_schedule_path=f"pi_adaptive/75NFE/data/_t.csv", **edm_churn_params, raw_path=False)
     add_spec("edm", "pi", 99, sampler_schedule_path=f"pi_adaptive/99NFE/data/_t.csv", **edm_churn_params, raw_path=False)
 
 
