@@ -30,6 +30,7 @@ class PISolver(Solver):
                  abs_error: bool = False,
                  batch_norm: bool = False,
                  seed: int = 0,
+                 reject_threshold: int = 1000,
                  **kwargs
                  ):
         r"""
@@ -60,6 +61,7 @@ class PISolver(Solver):
         self._max_iter = max_iter
         self._abs_error = abs_error
         self._batch_norm = batch_norm
+        self._reject_threshold = reject_threshold
 
     def solve(self, x: torch.Tensor, labels: torch.Tensor = None,
               callback: Callable[[torch.Tensor, torch.Tensor], None] = None) -> torch.Tensor:
@@ -103,7 +105,7 @@ class PISolver(Solver):
             error[not_finished] = new_error
 
             # Update x and t
-            not_rejected = error[not_finished] < 1000
+            not_rejected = error[not_finished] < self._reject_threshold
             x[not_rejected] = x_second[not_rejected]
             t[not_rejected] = t[not_rejected] + h[not_rejected]
 
