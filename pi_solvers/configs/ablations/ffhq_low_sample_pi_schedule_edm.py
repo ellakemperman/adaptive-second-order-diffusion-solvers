@@ -62,9 +62,9 @@ def get_config():
         "max_increase": 5,
         "max_iter": 1000
     }
-    add_spec("pi", "adaptive", 49, **pi_params(1.15, 40, 5), n=500)
-    add_spec("pi", "adaptive", 75, **pi_params(0.92, 35, 7), n=500)
-    add_spec("pi", "adaptive", 99, **pi_params(0.72, 35, 10), n=500)
+    add_spec("pi", "adaptive", 49, **pi_params(1.15, 40, 5), n_samples=500)
+    add_spec("pi", "adaptive", 75, **pi_params(0.92, 35, 7), n_samples=500)
+    add_spec("pi", "adaptive", 99, **pi_params(0.72, 35, 10), n_samples=500)
 
     # EDM
     edm_churn_params = {

@@ -19,10 +19,9 @@ def detect_outliers(paths: np.ndarray, t_min: float = 0.05, n_outlier_steps: int
     lengths = []
 
     for i, path in enumerate(paths):
-        end_index = np.where(path <= t_min)[0][0]
+        end_index = np.where(path <= t_min)
+        end_index = end_index[0][0]
         path = path[:(end_index + 1)]
-        if i == 1:
-            print(path)
 
         if end_index <= 2:
             continue
@@ -30,7 +29,7 @@ def detect_outliers(paths: np.ndarray, t_min: float = 0.05, n_outlier_steps: int
         if path.shape[0] < n_outlier_steps:
             print(f"Outlier at {i} with lengths {path.shape[0]}")
 
-        lengths.append((path.shape[0] - 3 + n_ode_steps) * 2 - 1)
+        lengths.append((path.shape[0] - 1 + n_ode_steps) * 2 - 1)
 
     plt.figure(figsize=(5, 3.75))
     plt.hist(lengths)
@@ -118,11 +117,11 @@ def analyse_pi_gaussian_trajectories(ax, label: str, data_path: str, t_max: floa
 
 
 if __name__ == "__main__":
-    data_path = "../../data/cluster_data/ts/ffhq49"
+    data_path = "../../data/cluster_data/ts/ffhq99"
     t_min = 0.002
     t_max = 80
 
-    detect_outliers(pd.read_csv(data_path).to_numpy(), t_min)
+    detect_outliers(pd.read_csv(data_path).to_numpy(), n_ode_steps=10)
 """
     fig = plt.figure(dpi=300)
     font = {'size': 12, 'weight': "bold"}
